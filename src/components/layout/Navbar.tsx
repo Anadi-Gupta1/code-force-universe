@@ -1,128 +1,139 @@
-
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, LogIn, UserPlus } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../ui/Button';
+import { Menu, X, Github } from 'lucide-react';
+
+interface NavLinkProps {
+  to: string;
+  label: string;
+  isScrolled: boolean;
+}
+
+const NavLink: React.FC<NavLinkProps> = ({ to, label, isScrolled }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
+  return (
+    <Link
+      to={to}
+      className={`transition-colors duration-300 ${
+        isScrolled
+          ? isActive
+            ? 'text-white'
+            : 'text-codeforce-gray hover:text-white'
+          : isActive
+            ? 'text-white'
+            : 'text-codeforce-light hover:text-white'
+      }`}
+    >
+      {label}
+    </Link>
+  );
+};
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Handle scroll event to change navbar appearance
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 50);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'py-3 bg-background/80 backdrop-blur-lg shadow-md' 
-          : 'py-5 bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="font-display text-xl font-bold tracking-tight gradient-blue-text">
-              CodeForce
-            </span>
-          </Link>
+    <header className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-codeforce-dark/95 backdrop-blur-sm shadow-md py-3' : 'bg-transparent py-5'}`}>
+      <div className="container mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <span className="text-xl font-bold text-white flex items-center">
+            <span className="text-codeforce-blue">&lt;</span>
+            Code
+            <span className="text-codeforce-blue">Force</span>
+            <span className="text-codeforce-blue">/&gt;</span>
+          </span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="/#events" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
-              Events
-            </a>
-            <a href="/#jobs" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
-              Jobs
-            </a>
-            <a href="/#projects" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
-              Projects
-            </a>
-            <div className="flex items-center space-x-3">
-              <Link to="/login" className="flex items-center nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
-                <LogIn size={16} className="mr-1" />
-                Login
-              </Link>
-              <Button 
-                size="sm"
-                asLink 
-                href="https://chat.whatsapp.com/L2r4J3ehsWbGx4vCURf4Li" 
-                target="_blank"
-              >
-                Join Community
-              </Button>
-            </div>
-          </nav>
-
-          {/* Mobile menu button */}
-          <button 
-            className="md:hidden p-2 rounded-md text-foreground hover:bg-secondary focus:outline-none" 
-            onClick={toggleMobileMenu}
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-8">
+          <NavLink to="/" label="Home" isScrolled={isScrolled} />
+          <NavLink to="/google-form" label="Apply" isScrolled={isScrolled} />
+          <NavLink to="/form" label="Join" isScrolled={isScrolled} />
+          <a 
+            href="https://github.com/Anadi-Gupta1" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={`flex items-center transition-colors duration-300 ${
+              isScrolled ? 'text-codeforce-gray hover:text-white' : 'text-codeforce-light hover:text-white'
+            }`}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            <Github className="h-4 w-4 mr-1" />
+            <span>GitHub</span>
+          </a>
+        </nav>
+
+        {/* Auth Buttons on Desktop */}
+        <div className="hidden md:flex items-center space-x-3">
+          <Link to="/login">
+            <Button variant="ghost" size="sm">Sign In</Button>
+          </Link>
+          <Link to="/google-form">
+            <Button size="sm">Join Us</Button>
+          </Link>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden text-white focus:outline-none"
+        >
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-lg">
-          <div className="px-4 pt-2 pb-4 space-y-3">
-            <a href="/#events" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
-              Events
-            </a>
-            <a href="/#jobs" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
-              Jobs
-            </a>
-            <a href="/#projects" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
-              Projects
-            </a>
-            <Link to="/login" className="flex items-center px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
-              <LogIn size={16} className="mr-2" />
-              Login
+      {/* Mobile Menu */}
+      <div 
+        className={`md:hidden absolute w-full bg-codeforce-dark border-t border-codeforce-blue/20 shadow-lg transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10 pointer-events-none'
+        }`}
+      >
+        <div className="container mx-auto px-4 py-3 space-y-3">
+          <Link to="/" className="block py-2 text-white hover:text-codeforce-blue transition-colors" onClick={() => setMobileMenuOpen(false)}>
+            Home
+          </Link>
+          <Link to="/google-form" className="block py-2 text-white hover:text-codeforce-blue transition-colors" onClick={() => setMobileMenuOpen(false)}>
+            Apply
+          </Link>
+          <Link to="/form" className="block py-2 text-white hover:text-codeforce-blue transition-colors" onClick={() => setMobileMenuOpen(false)}>
+            Join
+          </Link>
+          <a 
+            href="https://github.com/Anadi-Gupta1" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block py-2 text-white hover:text-codeforce-blue transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="flex items-center">
+              <Github className="h-4 w-4 mr-2" />
+              GitHub
+            </span>
+          </a>
+          <div className="pt-3 border-t border-codeforce-gray/20 flex items-center justify-between">
+            <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+              <Button variant="ghost" size="sm" className="w-full justify-center">Sign In</Button>
             </Link>
-            <Link to="/form" className="flex items-center px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
-              <UserPlus size={16} className="mr-2" />
-              Sign Up
+            <Link to="/google-form" onClick={() => setMobileMenuOpen(false)}>
+              <Button size="sm" className="w-full justify-center">Join Us</Button>
             </Link>
-            <div className="pt-2">
-              <Button 
-                size="sm"
-                className="w-full"
-                asLink 
-                href="https://chat.whatsapp.com/L2r4J3ehsWbGx4vCURf4Li" 
-                target="_blank"
-              >
-                Join WhatsApp
-              </Button>
-            </div>
-            <div className="pt-2">
-              <Button 
-                size="sm"
-                variant="outline"
-                className="w-full"
-                asLink 
-                href="https://discord.gg/fMWYHy9UHX" 
-                target="_blank"
-              >
-                Join Discord
-              </Button>
-            </div>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 };
