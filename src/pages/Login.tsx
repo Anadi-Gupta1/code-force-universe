@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import Button from '../components/ui/Button';
-import { Github, Mail } from 'lucide-react';
+import { toast } from "@/components/ui/use-toast";
+import { Github, Mail, ArrowLeft } from 'lucide-react';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +20,11 @@ const Login: React.FC = () => {
     // Simulate login
     setTimeout(() => {
       setIsLoading(false);
+      toast({
+        title: "Login Successful",
+        description: "You have been successfully logged in.",
+        duration: 5000,
+      });
       navigate('/');
     }, 1500);
   };
@@ -28,112 +33,130 @@ const Login: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="max-w-md w-full space-y-8 glass-card p-8 animate-fade-in relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-codeforce-blue/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-codeforce-blue/5 rounded-full blur-3xl"></div>
+      <main className="flex-grow py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-codeforce-dark to-codeforce-black">
+        <div className="max-w-4xl mx-auto mb-8">
+          <Link to="/" className="inline-flex items-center text-codeforce-blue hover:text-codeforce-blue/80 mb-6 group transition-all">
+            <ArrowLeft className="mr-2 h-4 w-4 group-hover:transform group-hover:-translate-x-1 transition-transform" />
+            Back to Home
+          </Link>
           
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold gradient-text mb-1">Welcome Back</h2>
-            <p className="text-muted-foreground mb-8">Sign in to your Code Force account</p>
-          </div>
-          
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="rounded-md shadow-sm space-y-4">
-              <div>
-                <label htmlFor="email-address" className="sr-only">Email address</label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none relative block w-full px-3 py-3 border border-border bg-input/30 placeholder-muted-foreground text-foreground rounded-md focus:outline-none focus:ring-codeforce-blue focus:border-codeforce-blue focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">Password</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none relative block w-full px-3 py-3 border border-border bg-input/30 placeholder-muted-foreground text-foreground rounded-md focus:outline-none focus:ring-codeforce-blue focus:border-codeforce-blue focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+          <div className="text-center mb-12">
+            <div className="inline-block p-1.5 rounded-xl bg-gradient-to-r from-codeforce-blue to-purple-500 mb-4">
+              <div className="bg-codeforce-dark px-6 py-2 rounded-lg">
+                <h3 className="text-sm font-medium uppercase tracking-wider text-codeforce-blue">Login Form</h3>
               </div>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 glow-text">Code Force Login</h1>
+            <p className="text-codeforce-gray max-w-2xl mx-auto">
+              Sign in to your account to access all the features of our platform.
+            </p>
+          </div>
+          
+          <div className="bg-black/30 backdrop-blur-lg border border-codeforce-blue/20 rounded-xl p-6 md:p-8 shadow-glow">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-codeforce-blue/10">
+              <h2 className="text-xl font-semibold text-white">Account Access</h2>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="animate-fade-in space-y-6">
+              <div className="space-y-2">
+                <label htmlFor="email" className="block text-sm font-medium text-codeforce-light">Email Address*</label>
                 <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-codeforce-blue focus:ring-codeforce-blue border-gray-300 rounded"
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-codeforce-dark/50 border border-codeforce-blue/20 focus:border-codeforce-blue/50 text-white rounded-md focus:ring-1 focus:ring-codeforce-blue outline-none transition-all"
+                  placeholder="your.email@example.com"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-muted-foreground">
-                  Remember me
-                </label>
               </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-medium text-codeforce-blue hover:text-codeforce-blue/80">
+              
+              <div className="space-y-2">
+                <label htmlFor="password" className="block text-sm font-medium text-codeforce-light">Password*</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-codeforce-dark/50 border border-codeforce-blue/20 focus:border-codeforce-blue/50 text-white rounded-md focus:ring-1 focus:ring-codeforce-blue outline-none transition-all"
+                  placeholder="••••••••"
+                />
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 text-codeforce-blue focus:ring-codeforce-blue border-gray-300 rounded mr-2"
+                  />
+                  <span className="text-sm text-codeforce-light">Remember me</span>
+                </label>
+                
+                <a href="#" className="text-sm text-codeforce-blue hover:text-codeforce-blue/80">
                   Forgot password?
                 </a>
               </div>
-            </div>
-
-            <div>
-              <Button
+              
+              <button
                 type="submit"
-                className="w-full"
-                isLoading={isLoading}
+                disabled={isLoading}
+                className={`
+                  w-full py-3 rounded-md font-medium flex items-center justify-center transition-all duration-300
+                  ${isLoading 
+                    ? 'bg-codeforce-blue/50 cursor-not-allowed' 
+                    : 'bg-codeforce-blue hover:bg-codeforce-blue/80 shadow-glow'} 
+                `}
               >
-                Sign in
-              </Button>
-            </div>
-          </form>
-          
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border"></div>
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  'Sign In'
+                )}
+              </button>
+              
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-codeforce-blue/10"></div>
+                </div>
+                <div className="relative flex justify-center">
+                  <span className="px-2 bg-black/30 text-codeforce-gray text-sm">Or continue with</span>
+                </div>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-card text-muted-foreground">Or continue with</span>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <button
+                  type="button"
+                  className="flex items-center justify-center py-2.5 px-4 border border-codeforce-blue/20 rounded-md bg-codeforce-dark/50 hover:bg-codeforce-dark transition-colors text-white"
+                >
+                  <Github className="h-5 w-5 mr-2" />
+                  GitHub
+                </button>
+                <button
+                  type="button"
+                  className="flex items-center justify-center py-2.5 px-4 border border-codeforce-blue/20 rounded-md bg-codeforce-dark/50 hover:bg-codeforce-dark transition-colors text-white"
+                >
+                  <Mail className="h-5 w-5 mr-2" />
+                  Google
+                </button>
               </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <Button 
-                variant="outline"
-                leftIcon={<Github size={16} />}
-              >
-                GitHub
-              </Button>
-              <Button 
-                variant="outline"
-                leftIcon={<Mail size={16} />}
-              >
-                Google
-              </Button>
-            </div>
+              
+              <p className="mt-6 text-center text-sm text-codeforce-gray">
+                Don't have an account?{' '}
+                <Link to="/google-form" className="text-codeforce-blue hover:underline">
+                  Sign up for free
+                </Link>
+              </p>
+            </form>
           </div>
-          
-          <p className="mt-8 text-center text-sm text-muted-foreground">
-            Don't have an account?{' '}
-            <Link to="/form" className="font-medium text-codeforce-blue hover:text-codeforce-blue/80">
-              Sign up for free
-            </Link>
-          </p>
         </div>
       </main>
       
