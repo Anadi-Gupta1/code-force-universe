@@ -25,8 +25,29 @@ const Index = () => {
     const hiddenElements = document.querySelectorAll('.js-section-fade');
     hiddenElements.forEach((el) => observer.observe(el));
 
+    // Mobile spotlight effect
+    const handleTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      const spotlight = document.createElement('div');
+      spotlight.classList.add('spotlight', 'mobile-spotlight');
+      spotlight.style.left = `${touch.clientX}px`;
+      spotlight.style.top = `${touch.clientY}px`;
+      spotlight.style.opacity = '0.5';
+      spotlight.style.width = '400px';
+      spotlight.style.height = '400px';
+      
+      document.body.appendChild(spotlight);
+      
+      setTimeout(() => {
+        spotlight.remove();
+      }, 1000);
+    };
+    
+    document.addEventListener('touchmove', handleTouchMove);
+
     return () => {
       hiddenElements.forEach((el) => observer.unobserve(el));
+      document.removeEventListener('touchmove', handleTouchMove);
     };
   }, []);
   

@@ -78,6 +78,10 @@
   section {
     @apply py-16 md:py-24;
   }
+
+  input, textarea, select {
+    @apply focus:ring-2 focus:ring-codeforce-blue focus:ring-opacity-50 focus:outline-none;
+  }
 }
 
 @layer components {
@@ -117,6 +121,14 @@
   
   .gradient-blue-text {
     @apply bg-gradient-to-r from-codeforce-blue to-accent bg-clip-text text-transparent;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  .interactive-card {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-glow;
   }
 }
 
@@ -169,4 +181,111 @@
   pointer-events: none;
   z-index: 0;
   opacity: 0.7;
+}
+
+.mobile-spotlight {
+  position: fixed;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  animation: fade-out 1s forwards;
+}
+
+@keyframes fade-out {
+  0% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+/* Page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  /* Adjust font sizes for mobile */
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .mobile-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  
+  /* Improve form elements on mobile */
+  input, select, textarea, button {
+    font-size: 16px !important; /* Prevents zoom on focus in iOS */
+  }
+}
+
+/* Improve accessibility - focus styles */
+a:focus, button:focus, input:focus, textarea:focus, select:focus {
+  outline: 2px solid rgba(0, 191, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Animation for text typing effect */
+.typing-effect {
+  border-right: 0.15em solid #00bfff;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #00bfff }
+}
+
+/* Advanced transitions */
+.tilt-on-hover {
+  transition: transform 0.3s ease;
+}
+
+.tilt-on-hover:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+}
+
+/* Loading states */
+.loading-skeleton {
+  background: linear-gradient(-90deg, #1a2a47 0%, #0e1c30 50%, #1a2a47 100%);
+  background-size: 400% 400%;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
 }

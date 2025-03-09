@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu, X, LogIn, UserPlus } from 'lucide-react';
 import Button from '../ui/Button';
 
 const Navbar: React.FC = () => {
@@ -32,31 +33,37 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="font-display text-xl font-bold tracking-tight gradient-blue-text">
               CodeForce
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#events" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
+            <a href="/#events" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
               Events
             </a>
-            <a href="#jobs" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
+            <a href="/#jobs" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
               Jobs
             </a>
-            <a href="#projects" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
+            <a href="/#projects" className="nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
               Projects
             </a>
-            <Button 
-              size="sm"
-              asLink 
-              href="https://chat.whatsapp.com/L2r4J3ehsWbGx4vCURf4Li" 
-              target="_blank"
-            >
-              Join Community
-            </Button>
+            <div className="flex items-center space-x-3">
+              <Link to="/login" className="flex items-center nav-link text-sm font-medium text-foreground hover:text-codeforce-blue transition-colors">
+                <LogIn size={16} className="mr-1" />
+                Login
+              </Link>
+              <Button 
+                size="sm"
+                asLink 
+                href="https://chat.whatsapp.com/L2r4J3ehsWbGx4vCURf4Li" 
+                target="_blank"
+              >
+                Join Community
+              </Button>
+            </div>
           </nav>
 
           {/* Mobile menu button */}
@@ -73,15 +80,23 @@ const Navbar: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-lg">
           <div className="px-4 pt-2 pb-4 space-y-3">
-            <a href="#events" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
+            <a href="/#events" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
               Events
             </a>
-            <a href="#jobs" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
+            <a href="/#jobs" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
               Jobs
             </a>
-            <a href="#projects" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
+            <a href="/#projects" className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
               Projects
             </a>
+            <Link to="/login" className="flex items-center px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
+              <LogIn size={16} className="mr-2" />
+              Login
+            </Link>
+            <Link to="/form" className="flex items-center px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-secondary hover:text-codeforce-blue transition-colors" onClick={toggleMobileMenu}>
+              <UserPlus size={16} className="mr-2" />
+              Sign Up
+            </Link>
             <div className="pt-2">
               <Button 
                 size="sm"
@@ -90,7 +105,19 @@ const Navbar: React.FC = () => {
                 href="https://chat.whatsapp.com/L2r4J3ehsWbGx4vCURf4Li" 
                 target="_blank"
               >
-                Join Community
+                Join WhatsApp
+              </Button>
+            </div>
+            <div className="pt-2">
+              <Button 
+                size="sm"
+                variant="outline"
+                className="w-full"
+                asLink 
+                href="https://discord.gg/fMWYHy9UHX" 
+                target="_blank"
+              >
+                Join Discord
               </Button>
             </div>
           </div>

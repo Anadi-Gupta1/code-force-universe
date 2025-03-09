@@ -9,63 +9,63 @@ import { Github, Star, GitFork } from 'lucide-react';
 const projects = [
   {
     id: 1,
-    title: "CodeForce CLI",
-    description: "A command-line tool for automating developer workflows and project setup.",
-    language: "TypeScript",
-    stars: 342,
-    forks: 56,
-    link: "https://github.com/example/codeforce-cli",
-    contributors: 12
+    title: "Swarajya",
+    description: "Revolutionary project celebrating India's independence and cultural heritage.",
+    language: "JavaScript",
+    stars: 28,
+    forks: 12,
+    link: "https://github.com/Anadi-Gupta1/Swarajya-",
+    contributors: 3
   },
   {
     id: 2,
-    title: "DevConnect",
-    description: "Open-source platform for connecting developers with mentors and collaborative projects.",
-    language: "JavaScript",
-    stars: 531,
-    forks: 78,
-    link: "https://github.com/example/devconnect",
-    contributors: 24
+    title: "My Crush",
+    description: "Creative personal project with interactive animations and unique UI design.",
+    language: "HTML/CSS",
+    stars: 15,
+    forks: 5,
+    link: "https://github.com/Anadi-Gupta1/my-crush",
+    contributors: 1
   },
   {
     id: 3,
-    title: "AI Code Assistant",
-    description: "An AI-powered code helper that provides real-time suggestions and code improvements.",
-    language: "Python",
-    stars: 1204,
-    forks: 189,
-    link: "https://github.com/example/ai-code-assistant",
-    contributors: 37
+    title: "GDG",
+    description: "Google Developer Group project with developer tools and resources.",
+    language: "TypeScript",
+    stars: 42,
+    forks: 18,
+    link: "https://github.com/Anadi-Gupta1/GDG",
+    contributors: 7
   },
   {
     id: 4,
-    title: "CloudDeploy",
-    description: "Simplified cloud deployment tool supporting AWS, GCP, and Azure with one configuration.",
-    language: "Go",
-    stars: 687,
-    forks: 92,
-    link: "https://github.com/example/clouddeploy",
-    contributors: 18
+    title: "Dark",
+    description: "Dark-themed UI component library with modern design patterns.",
+    language: "JavaScript",
+    stars: 56,
+    forks: 23,
+    link: "https://github.com/Anadi-Gupta1/Dark",
+    contributors: 5
   },
   {
     id: 5,
-    title: "DataViz Library",
-    description: "Comprehensive data visualization library for web applications with React integration.",
-    language: "TypeScript",
-    stars: 438,
-    forks: 62,
-    link: "https://github.com/example/dataviz-lib",
-    contributors: 9
+    title: "DevConnect",
+    description: "Open-source platform for connecting developers with mentors and collaborative projects.",
+    language: "JavaScript",
+    stars: 123,
+    forks: 44,
+    link: "https://github.com/Anadi-Gupta1",
+    contributors: 15
   },
   {
     id: 6,
     title: "Mobile UI Kit",
     description: "A rich collection of mobile UI components optimized for React Native applications.",
     language: "JavaScript",
-    stars: 873,
-    forks: 146,
-    link: "https://github.com/example/mobile-ui-kit",
-    contributors: 31
+    stars: 87,
+    forks: 34,
+    link: "https://github.com/Anadi-Gupta1",
+    contributors: 8
   }
 ];
 
@@ -76,7 +76,8 @@ const languageColors: Record<string, string> = {
   Python: "#3776AB",
   Go: "#00ADD8",
   Rust: "#DEA584",
-  Java: "#B07219"
+  Java: "#B07219",
+  "HTML/CSS": "#E34C26"
 };
 
 const ProjectsSection: React.FC = () => {
@@ -91,7 +92,7 @@ const ProjectsSection: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <Card key={project.id} className="h-full flex flex-col">
+            <Card key={project.id} className="h-full flex flex-col hover:transform hover:scale-105 transition-all duration-300">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center">
@@ -145,7 +146,14 @@ const ProjectsSection: React.FC = () => {
               Join our community of contributors and help build the future of open source software. Whether you're a beginner or expert, your contributions matter.
             </p>
           </div>
-          <Button leftIcon={<Github size={18} />}>Submit Your Project</Button>
+          <Button 
+            leftIcon={<Github size={18} />}
+            asLink
+            href="https://github.com/Anadi-Gupta1"
+            target="_blank"
+          >
+            Submit Your Project
+          </Button>
         </div>
       </div>
     </section>

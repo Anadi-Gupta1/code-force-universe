@@ -1,7 +1,8 @@
 
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, MessageSquare, UserPlus } from 'lucide-react';
 
 const HeroSection: React.FC = () => {
   const spotlightRef = useRef<HTMLDivElement>(null);
@@ -23,9 +24,9 @@ const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen pt-24 flex items-center overflow-hidden">
+    <section className="relative min-h-screen pt-24 md:pt-36 flex items-center overflow-hidden">
       {/* Animated spotlight effect */}
-      <div ref={spotlightRef} className="spotlight"></div>
+      <div ref={spotlightRef} className="spotlight hidden md:block"></div>
       
       {/* Background elements */}
       <div className="absolute inset-0 z-0 bg-hero-pattern"></div>
@@ -39,11 +40,11 @@ const HeroSection: React.FC = () => {
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 gradient-text animate-fade-in">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 gradient-text animate-fade-in">
             Code Force
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto opacity-0 animate-fade-in-delay">
+          <p className="text-lg md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto opacity-0 animate-fade-in-delay">
             Join the force of developers and grow together.
           </p>
           
@@ -56,7 +57,7 @@ const HeroSection: React.FC = () => {
               rightIcon={<ArrowRight size={20} />}
               className="animate-pulse-glow"
             >
-              Join WhatsApp Community
+              Join WhatsApp
             </Button>
             
             <Button 
@@ -67,18 +68,30 @@ const HeroSection: React.FC = () => {
               target="_blank"
               leftIcon={<MessageSquare size={20} />}
             >
-              Join Discord Community
+              Join Discord
             </Button>
           </div>
           
-          <div className="mt-20 opacity-0 animate-fade-in-delay-longer">
+          <div className="mt-8 opacity-0 animate-fade-in-delay-longer">
+            <Link to="/form">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                leftIcon={<UserPlus size={18} />}
+              >
+                Sign up for free
+              </Button>
+            </Link>
+          </div>
+          
+          <div className="mt-16 lg:mt-20 opacity-0 animate-fade-in-delay-longer">
             <p className="text-muted-foreground mb-4">Trusted by developers from</p>
-            <div className="flex justify-center items-center gap-8 flex-wrap">
-              <div className="text-muted-foreground/60 font-bold text-lg">Google</div>
-              <div className="text-muted-foreground/60 font-bold text-lg">Microsoft</div>
-              <div className="text-muted-foreground/60 font-bold text-lg">Amazon</div>
-              <div className="text-muted-foreground/60 font-bold text-lg">Meta</div>
-              <div className="text-muted-foreground/60 font-bold text-lg">Apple</div>
+            <div className="flex justify-center items-center gap-4 sm:gap-8 flex-wrap">
+              <div className="text-muted-foreground/60 font-bold text-base sm:text-lg">Google</div>
+              <div className="text-muted-foreground/60 font-bold text-base sm:text-lg">Microsoft</div>
+              <div className="text-muted-foreground/60 font-bold text-base sm:text-lg">Amazon</div>
+              <div className="text-muted-foreground/60 font-bold text-base sm:text-lg">Meta</div>
+              <div className="text-muted-foreground/60 font-bold text-base sm:text-lg">Apple</div>
             </div>
           </div>
         </div>
