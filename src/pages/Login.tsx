@@ -17,7 +17,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate login
+    // Simulate login - In a real implementation, this would connect to Supabase
     setTimeout(() => {
       setIsLoading(false);
       toast({
@@ -151,7 +151,7 @@ const Login: React.FC = () => {
               
               <p className="mt-6 text-center text-sm text-codeforce-gray">
                 Don't have an account?{' '}
-                <Link to="/google-form" className="text-codeforce-blue hover:underline">
+                <Link to="/signup" className="text-codeforce-blue hover:underline">
                   Sign up for free
                 </Link>
               </p>

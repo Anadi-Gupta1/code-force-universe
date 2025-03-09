@@ -33,7 +33,7 @@ const GoogleForm: React.FC = () => {
   const [submissions, setSubmissions] = useState<FormData[]>([]);
   const [showData, setShowData] = useState(false);
   
-  // Load existing submissions from localStorage
+  // Load existing submissions from localStorage (would be replaced by database call)
   useEffect(() => {
     const storedData = localStorage.getItem('codeForceUserData');
     if (storedData) {
@@ -65,15 +65,16 @@ const GoogleForm: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Store in localStorage (simulating database storage)
+    // For now, store in localStorage (this would be replaced with a database call)
+    // In a real implementation, this would send data to Supabase
     setTimeout(() => {
       const updatedSubmissions = [...submissions, formData];
       setSubmissions(updatedSubmissions);
       localStorage.setItem('codeForceUserData', JSON.stringify(updatedSubmissions));
       
       toast({
-        title: "Form Submitted Successfully",
-        description: "Your information has been saved to our database.",
+        title: "Sign Up Successful!",
+        description: "Your account has been created. You can now log in.",
         duration: 5000,
       });
       
@@ -107,12 +108,12 @@ const GoogleForm: React.FC = () => {
           <div className="text-center mb-12">
             <div className="inline-block p-1.5 rounded-xl bg-gradient-to-r from-codeforce-blue to-purple-500 mb-4">
               <div className="bg-codeforce-dark px-6 py-2 rounded-lg">
-                <h3 className="text-sm font-medium uppercase tracking-wider text-codeforce-blue">Google Form Style</h3>
+                <h3 className="text-sm font-medium uppercase tracking-wider text-codeforce-blue">Sign Up Form</h3>
               </div>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 glow-text">Code Force Community Application</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 glow-text">Create Your Code Force Account</h1>
             <p className="text-codeforce-gray max-w-2xl mx-auto">
-              Fill out this form to join our thriving developer community. Your information will be stored in our database.
+              Sign up to join our thriving developer community. Your information will be stored in our database.
             </p>
           </div>
           
@@ -130,9 +131,9 @@ const GoogleForm: React.FC = () => {
             
             {showData ? (
               <div className="animate-fade-in">
-                <h3 className="text-lg font-medium text-white mb-4">Stored Submissions ({submissions.length})</h3>
+                <h3 className="text-lg font-medium text-white mb-4">Registered Users ({submissions.length})</h3>
                 {submissions.length === 0 ? (
-                  <p className="text-codeforce-gray italic">No submissions yet. Be the first to apply!</p>
+                  <p className="text-codeforce-gray italic">No users registered yet. Be the first to sign up!</p>
                 ) : (
                   <div className="space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
                     {submissions.map((submission, index) => (
@@ -327,16 +328,23 @@ const GoogleForm: React.FC = () => {
                     ) : (
                       <>
                         <Save className="mr-2 h-5 w-5" />
-                        Submit Application
+                        Create Account
                       </>
                     )}
                   </button>
                   
                   <p className="mt-4 text-center text-sm text-codeforce-gray">
-                    By submitting, you agree to our{' '}
+                    By signing up, you agree to our{' '}
                     <a href="#" className="text-codeforce-blue hover:underline">Terms of Service</a>
                     {' '}and{' '}
                     <a href="#" className="text-codeforce-blue hover:underline">Privacy Policy</a>
+                  </p>
+                  
+                  <p className="mt-6 text-center text-sm text-codeforce-gray">
+                    Already have an account?{' '}
+                    <Link to="/login" className="text-codeforce-blue hover:underline">
+                      Log in here
+                    </Link>
                   </p>
                 </div>
               </form>
